@@ -270,7 +270,7 @@ function frame(now) {
   }
   gestureHelp.style.opacity = gMode ? fade : 1;
   // hints hidden, camera running, no hand seen: a small hand icon in the middle of the video
-  handCue.toggleAttribute('hidden', !(gMode && video.srcObject && !hand.active));   // (an SVG: no .hidden property)
+  handCue.hidden = !(gMode && video.srcObject && !hand.active);
   if (helpNote.hidden === hand.hold > 1) {
     helpNote.hidden = !(hand.hold > 1);
     placeNotes();
