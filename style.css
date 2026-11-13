@@ -80,7 +80,6 @@ button:hover { background: rgba(255, 255, 255, 0.16); }
 
 /* Config column, top left: settings, then image sources, then the H hint */
 #config { position: fixed; left: 16px; top: 12px; display: flex; flex-direction: column; align-items: flex-start; }
-#hud .hud-title { color: var(--fg); font-weight: 600; margin-bottom: 6px; }
 #hud pre { margin: 0; color: var(--muted); font: inherit; white-space: pre; }
 #toolbar { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; margin-top: 18px; }
 #arena-form { display: flex; gap: 6px; }
@@ -92,12 +91,12 @@ button:hover { background: rgba(255, 255, 255, 0.16); }
 #status { color: var(--muted); max-width: 340px; }
 
 /* plain underlined text, not a boxed button */
-button.text-link, button.text-link:hover {
+button.text-link, button.text-link:hover, a.text-link {
   background: none; border: none; padding: 2px 0; width: auto;
   color: var(--fg); text-decoration: underline; text-underline-offset: 3px;
 }
-button.text-link.muted { color: var(--muted); }
-button.text-link.muted:hover { color: var(--fg); }
+.text-link.muted { color: var(--muted); }
+.text-link.muted:hover { color: var(--fg); }
 
 /* Instructions: open under their link, on the page background so they stay readable over images */
 #help {

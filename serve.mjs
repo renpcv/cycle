@@ -19,7 +19,7 @@ const TYPES = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8',
   '.css': 'text/css; charset=utf-8', '.json': 'application/json; charset=utf-8', '.svg': 'image/svg+xml',
   '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.gif': 'image/gif', '.webp': 'image/webp',
-  '.avif': 'image/avif', '.bmp': 'image/bmp',
+  '.avif': 'image/avif', '.bmp': 'image/bmp', '.zip': 'application/zip',
 };
 
 http.createServer(async (req, res) => {

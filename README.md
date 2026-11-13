@@ -41,6 +41,13 @@ Values you tune are remembered in this browser. Gesture settings are at the top 
 Any static host works (GitHub Pages, Netlify, ...). Run `node build-manifest.mjs` after changing images,
 so `images/manifest.json` lists them, then upload this folder.
 
+## The source download
+
+The page's "Download source code" link serves `cycle-source.zip`, which holds a `local/` and a `web/` copy of the tool
+plus `README.txt` (from `source-readme.txt`). Rebuild it before each publish so it matches the site:
+
+    node build-manifest.mjs && node build-zip.mjs
+
 ## Files
 
 - `js/params.js` - adjustable values and keyboard (TD `params`, `keys_execute`, `hold_execute`)
