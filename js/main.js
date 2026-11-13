@@ -2,7 +2,7 @@
 
 import { PARAMS, values, ui, clampSet, initKeyboard, updateKeyboard } from './params.js';
 import { initImages, useLocalFiles, useArenaChannel, arenaChannelSlug } from './images.js';
-import { initWheel, setItems, setLayout, featuredIndex, render } from './wheel.js';
+import { initWheel, setItems, setLayout, featuredIndex, snapSpin, cardCount, render } from './wheel.js';
 import { hand, GESTURE, initHands, startCamera } from './hands.js';
 import { isSheet, readSheet, findFilenameColumn, columnNames, chooseColumns, notice, buildCaptions, imageKey } from './captions.js';
 
@@ -148,11 +148,17 @@ startBtn.addEventListener('click', camera);
 navigator.permissions?.query({ name: 'camera' }).then((p) => { if (p.state === 'granted') camera(); }).catch(() => {});
 
 // ---------- keyboard + HUD ----------
-initKeyboard({ onToggleHud: (visible) => { document.body.classList.toggle('hud-hidden', !visible); placeNotes(); } });
+initKeyboard({
+  onToggleHud: (visible) => { document.body.classList.toggle('hud-hidden', !visible); placeNotes(); },
+  onSnap: (steps) => { values.spin = snapSpin(values, steps); },   // key 0: move image by image
+});
 
 function fmt(v) { return Number.isInteger(v) ? String(v) : v.toFixed(3).replace(/0+$/, '').replace(/\.$/, ''); }
 function drawHud() {
-  const rows = PARAMS.map((p, i) => `${i === ui.selected ? '>' : ' '} ${p.key}  ${(p.label || p.name).padEnd(10)} ${fmt(values[p.name])}`);
+  const rows = PARAMS.map((p, i) => {
+    const value = p.snap ? `${featuredIndex(values) + 1}/${cardCount()}` : fmt(values[p.name]);   // 'image': featured / total
+    return `${i === ui.selected ? '>' : ' '} ${p.key}  ${(p.label || p.name).padEnd(10)} ${value}`;
+  });
   // hand status always fits on one line, so nothing below it moves
   const state = hand.locked ? 'LOCKED' : 'unlocked';
   const detail = !hand.active ? 'no hand'
@@ -160,7 +166,7 @@ function drawHud() {
     : hand.engaged ? `dial  spread ${hand.spread.toFixed(2)}  gain ${hand.gain.toFixed(2)}`
     : 'clutch';
   const placeholders = items.length && items.every((it) => /^placeholder-\d+\.png$/i.test(it.name));   // the default set
-  hud.textContent = `1-9 select · ←/→ adjust (shift ×10) · R reset\n\n${rows.join('\n')}\n\n${state} · ${detail}\n${placeholders ? 'no images loaded, placeholders shown' : `${items.length} images`}`;
+  hud.textContent = `0-9 select · ←/→ adjust (shift ×10) · R reset\n\n${rows.join('\n')}\n\n${state} · ${detail}\n${placeholders ? 'no images loaded, placeholders shown' : `${items.length} images`}`;
 }
 
 // ---------- layout: wheel sits left of the featured image, above the camera view ----------

@@ -52,7 +52,7 @@ WHAT'S THE SAME IN BOTH
 
 USING THE PAGE
 --------------
-Keyboard: 1-9 pick a setting, left/right arrows adjust it (Shift for bigger
+Keyboard: 0-9 pick a setting (0: step image by image), left/right arrows adjust it (Shift for bigger
 steps), R resets it, H hides or shows the settings, G hides or shows the
 gesture hints next to the video.
 

@@ -52,15 +52,31 @@ export function rotation(v) {
   return v.spin + Math.round(v.fine) / n;
 }
 
-// The card nearest the point of the oval furthest in screen direction 'focus_dir'
-// (0 = straight right on screen, 90 = toward the viewer), as in the 'focus' and 'featured' CHOPs
+// Where on the oval the focus point is, in turns: the point furthest in screen direction
+// 'focus_dir' (0 = straight right on screen, 90 = toward the viewer), as in the 'focus' CHOP
+function focusTurns(v) {
+  const a = (v.azimuth - v.focus_dir) * Math.PI / 180;
+  return ((Math.atan2(-v.radius_z * Math.sin(a), v.radius_x * Math.cos(a)) / (2 * Math.PI)) % 1 + 1) % 1;
+}
+
+// The card nearest the focus point, as in the 'featured' CHOP
 export function featuredIndex(v) {
   const n = order.length;
   if (!n) return -1;
-  const a = (v.azimuth - v.focus_dir) * Math.PI / 180;
-  const focus = ((Math.atan2(-v.radius_z * Math.sin(a), v.radius_x * Math.cos(a)) / (2 * Math.PI)) % 1 + 1) % 1;
-  return ((Math.round((focus + rotation(v)) * n) % n) + n) % n;
+  return ((Math.round((focusTurns(v) + rotation(v)) * n) % n) + n) % n;
 }
+
+// The spin value that puts a card exactly on the focus point: 'step' cards on from the
+// nearest one (0 = just line up the nearest card)
+export function snapSpin(v, step) {
+  const n = order.length;
+  if (!n) return v.spin;
+  const f = focusTurns(v);
+  const k = Math.round((f + rotation(v)) * n) + step;
+  return k / n - f - Math.round(v.fine) / n;
+}
+
+export function cardCount() { return order.length; }
 
 export function render(v) {
   const n = order.length;
