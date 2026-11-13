@@ -131,15 +131,15 @@ function updateGesture(now, lm, palmScore) {
   else if (hand.touching && hand.spread > s.open) hand.touching = false;
   else if (!hand.touching && hand.spread < s.close) hand.touching = true;
 
-  // open palm: held for lockhold seconds toggles the lock; held on past helphold seconds shows the
-  // gesture instructions instead, undoing that toggle so a long hold leaves the lock as it was.
+  // open palm: held for lockhold seconds toggles the lock; held on past helphold seconds also shows the
+  // gesture instructions, for as long as the palm stays up.
   // (either MediaPipe's Open_Palm score or the hand's shape counts, since the score alone runs close to its threshold)
   if (hand.active && (hand.palm > s.palmscore || hand.palmShape)) mem.palmSeen = now;
   const held = now - mem.palmSeen < s.palmgrace;     // bridge brief recognition dropouts
   if (held) {
     hand.hold += dt;                                  // seconds the palm has been up
     if (!mem.fired && hand.hold >= s.lockhold) { hand.locked = !hand.locked; mem.fired = true; }
-    if (!hand.showHelp && hand.hold >= s.helphold) { hand.locked = !hand.locked; hand.showHelp = true; }
+    if (hand.hold >= s.helphold) hand.showHelp = true;
   } else { hand.hold = 0; mem.fired = false; hand.showHelp = false; }
 
   hand.engaged = hand.active && !hand.locked && !held && !hand.touching;

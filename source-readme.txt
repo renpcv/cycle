@@ -65,8 +65,10 @@ steps), R resets it, H hides or shows the settings.
 Hands (click "Start camera" first):
 - Gestures start locked. Show an open palm for 3 seconds to unlock (and again to lock).
 - Hold thumb and index finger apart and twist like a dial to turn the wheel.
-- Bring them closer for finer movement. Touch them to pause, so you can
-  reposition your hand and keep turning.
+- Bring them closer for finer movement. Touch them to pause. This also allows
+  you to reposition your hand and keep turning.
+- Hold an open palm for over 5 seconds to show these gesture instructions
+  next to the video.
 
 
 CHANGING IT
