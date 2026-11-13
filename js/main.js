@@ -166,9 +166,19 @@ function drawHud() {
 // to keep the opened gesture instructions on screen
 function placeNotes() {
   const c = cameraBox.getBoundingClientRect();
+  const left = c.right + 20;
+  // stop short of the featured image so the notes never run under it or its caption
+  const width = Math.max(200, Math.min(560, featuredBox.getBoundingClientRect().left - 24 - left));
+  cameraNotes.style.width = `${width}px`;
   const top = Math.min(c.top, window.innerHeight - 16 - cameraNotes.offsetHeight);
-  Object.assign(cameraNotes.style, { left: `${c.right + 20}px`, top: `${Math.max(8, top)}px` });
+  Object.assign(cameraNotes.style, { left: `${left}px`, top: `${Math.max(8, top)}px` });
 }
+
+// G hides or shows the hand note lines (the 5-second palm instructions still appear)
+window.addEventListener('keydown', (e) => {
+  if (e.target instanceof HTMLInputElement || e.target instanceof HTMLSelectElement || document.querySelector('dialog[open]')) return;
+  if (e.key === 'g' || e.key === 'G') { cameraNotes.classList.toggle('notes-hidden'); placeNotes(); }
+});
 
 function layout() {
   const vw = window.innerWidth, vh = window.innerHeight;
