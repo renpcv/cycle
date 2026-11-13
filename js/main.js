@@ -172,12 +172,19 @@ function placeNotes() {
   // "Press G" line: level with the bottom of the video
   Object.assign(gNote.style, { left: `${left}px`, top: `${c.bottom - gNote.offsetHeight}px` });
   const gShown = gNote.offsetHeight > 0;
-  // stop short of the featured image so the notes never run under it or its caption
-  const width = Math.max(200, Math.min(560, featuredBox.getBoundingClientRect().left - 24 - left));
-  cameraNotes.style.width = `${width}px`;
-  gestureHelp.style.maxWidth = `${window.innerWidth - left - 16}px`;   // instructions may run past the column, not off screen
+  // closed: stop short of the featured image so the notes never run under it or its caption.
+  // open: everything runs in single lines on top (it's temporary), so the column stays short.
+  const room = window.innerWidth - left - 16;
+  if (gestureHelp.hidden) {
+    cameraNotes.style.width = `${Math.max(200, Math.min(560, featuredBox.getBoundingClientRect().left - 24 - left))}px`;
+    cameraNotes.style.maxWidth = '';
+  } else {
+    cameraNotes.style.width = 'max-content';
+    cameraNotes.style.maxWidth = `${room}px`;
+  }
+  gestureHelp.style.maxWidth = `${room}px`;
   // top-aligned with the video, moved up only as far as needed to stay above the G line / screen edge
-  const floor = gShown ? c.bottom - gNote.offsetHeight - 12 : window.innerHeight - 16;
+  const floor = gShown ? c.bottom - gNote.offsetHeight - 6 : window.innerHeight - 16;
   const top = Math.min(c.top, floor - cameraNotes.offsetHeight);
   Object.assign(cameraNotes.style, { left: `${left}px`, top: `${Math.max(8, top)}px` });
 }
