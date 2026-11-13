@@ -20,8 +20,6 @@
     <video playsinline muted></video>
     <canvas class="overlay"></canvas>
     <button id="start-camera" type="button">Start camera</button>
-    <!-- with gesture hints hidden: a small hand in the middle of the video while no hand is seen -->
-    <div id="hand-cue" hidden>no hand<svg aria-hidden="true"><use href="#hand-icon"/></svg></div>
   </div>
   <!-- open hand: "hand" icon from Lucide (lucide.dev), ISC licence -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -40,7 +38,7 @@
     </div>
   </div>
   <!-- level with the bottom of the video -->
-  <div id="g-note">Press G to toggle gesture hints</div>
+  <div id="g-note">Press G to hide gesture hints</div>
 
   <!-- config UI (H hides it): settings, image sources, hint -->
   <div id="config">
