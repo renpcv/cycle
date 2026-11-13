@@ -147,7 +147,7 @@ startBtn.addEventListener('click', camera);
 navigator.permissions?.query({ name: 'camera' }).then((p) => { if (p.state === 'granted') camera(); }).catch(() => {});
 
 // ---------- keyboard + HUD ----------
-initKeyboard({ onToggleHud: (visible) => document.body.classList.toggle('hud-hidden', !visible) });
+initKeyboard({ onToggleHud: (visible) => { document.body.classList.toggle('hud-hidden', !visible); placeNotes(); } });
 
 function fmt(v) { return Number.isInteger(v) ? String(v) : v.toFixed(3).replace(/0+$/, '').replace(/\.$/, ''); }
 function drawHud() {

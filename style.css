@@ -120,7 +120,7 @@ button.text-link, button.text-link:hover, a.text-link {
 #help[hidden] { display: none; }
 #help p { margin: 0 0 8px; }
 #help button.text-link { padding: 0; margin-left: 0.4em; }
-body.hud-hidden #config { display: none; }
+body.hud-hidden #config, body.hud-hidden #g-note { display: none; }   /* H also hides the "Press G" line */
 
 #drop-hint {
   position: fixed; inset: 0; display: none; place-items: center;
