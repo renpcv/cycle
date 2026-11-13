@@ -3,7 +3,7 @@
 import { PARAMS, values, ui, clampSet, initKeyboard, updateKeyboard } from './params.js';
 import { initImages, useLocalFiles, useArenaChannel, arenaChannelSlug } from './images.js';
 import { initWheel, setItems, setLayout, featuredIndex, render } from './wheel.js';
-import { hand, GESTURE, initHands, startCamera } from './hands.js';
+import { hand, initHands, startCamera } from './hands.js';
 import { isSheet, readSheet, findFilenameColumn, columnNames, chooseColumns, notice, buildCaptions, imageKey } from './captions.js';
 
 const $ = (sel) => document.querySelector(sel);
@@ -16,6 +16,7 @@ const startBtn = $('#start-camera');
 const hud = $('#hud pre');
 const status = $('#status');
 const cameraNote = $('#camera-note');
+const gestureHelp = $('#gesture-help');
 
 let items = [];
 let shownIndex = -2;     // featured image currently drawn
@@ -151,12 +152,13 @@ initKeyboard({ onToggleHud: (visible) => document.body.classList.toggle('hud-hid
 function fmt(v) { return Number.isInteger(v) ? String(v) : v.toFixed(3).replace(/0+$/, '').replace(/\.$/, ''); }
 function drawHud() {
   const rows = PARAMS.map((p, i) => `${i === ui.selected ? '>' : ' '} ${p.key}  ${p.name.padEnd(10)} ${fmt(values[p.name])}`);
-  const h = hand.locked ? 'LOCKED'
-    : !hand.active ? 'no hand'
-    : `${hand.engaged ? 'dial' : 'clutch'}  spread ${hand.spread.toFixed(2)}  gain ${hand.gain.toFixed(2)}`;
-  const hold = hand.hold > 0 ? `  hold ${Math.round(hand.hold / GESTURE.lockhold * 100)}%` : '';
-  const palm = hand.active ? `palm score ${hand.palm.toFixed(2)}  shape ${hand.palmShape ? 'open' : '-'}\n` : '';
-  hud.textContent = `Keyboard: 1-9 select · ←/→ adjust (shift ×10) · R reset\n\n${rows.join('\n')}\n\n${h}${hold}\n${palm}${items.length} images`;
+  // hand status always fits on one line, so nothing below it moves
+  const state = hand.locked ? 'LOCKED' : 'unlocked';
+  const detail = !hand.active ? 'no hand'
+    : hand.hold > 0 ? `palm ${hand.hold.toFixed(1)}s`
+    : hand.engaged ? `dial  spread ${hand.spread.toFixed(2)}  gain ${hand.gain.toFixed(2)}`
+    : 'clutch';
+  hud.textContent = `Keyboard: 1-9 select · ←/→ adjust (shift ×10) · R reset\n\n${rows.join('\n')}\n\n${state} · ${detail}\n${items.length} images`;
 }
 
 // ---------- layout: wheel sits left of the featured image, above the camera view ----------
@@ -217,6 +219,7 @@ function frame(now) {
   render(values);
   drawFeatured(featuredIndex(values));
   cameraNote.classList.toggle('unlocked', !hand.locked);   // white while locked, grey while unlocked
+  gestureHelp.hidden = !hand.showHelp;                     // open palm held for over 5 seconds
   if (ui.hudVisible) drawHud();
   requestAnimationFrame(frame);
 }

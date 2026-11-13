@@ -20,6 +20,7 @@ export const GESTURE = {
   direction: 1,      // set to -1 to reverse the dial
   maxstep: 45,       // ignore angle jumps bigger than this (tracking glitches)
   lockhold: 3,       // seconds of open palm to lock / unlock
+  helphold: 5,       // seconds of open palm to show the gesture instructions (while the palm stays up)
   palmscore: 0.4,    // Open_Palm score that counts as an open palm
   palmgrace: 0.4,    // seconds of dropout allowed while holding the palm
   palmstraight: 1.15, // open hand by shape: each fingertip this much further from the wrist than its middle joint
@@ -48,7 +49,7 @@ const filters = Object.fromEntries(Object.keys(JOINTS).flatMap((j) => [[j + 'x',
 
 // Live state, like the 'gesture' + 'gesture_state' CHOPs (shown in the HUD)
 // starts locked: hold an open palm to unlock the gesture controls
-export const hand = { active: false, spread: 0, angle: 0, palm: 0, palmShape: false, touching: false, engaged: false, gain: 0, locked: true, hold: 0 };
+export const hand = { active: false, spread: 0, angle: 0, palm: 0, palmShape: false, touching: false, engaged: false, gain: 0, locked: true, hold: 0, showHelp: false };
 const mem = { prev: null, palmSeen: -99, fired: false, t: null };
 
 let recognizer = null, video = null, overlay = null, ctx = null, onSpin = () => {}, landmarks = null;
@@ -130,16 +131,16 @@ function updateGesture(now, lm, palmScore) {
   else if (hand.touching && hand.spread > s.open) hand.touching = false;
   else if (!hand.touching && hand.spread < s.close) hand.touching = true;
 
-  // open-palm lock: hold the palm up, toggle once the hold reaches lockhold seconds
+  // open palm: held for lockhold seconds toggles the lock; held on past helphold seconds shows the
+  // gesture instructions instead, undoing that toggle so a long hold leaves the lock as it was.
   // (either MediaPipe's Open_Palm score or the hand's shape counts, since the score alone runs close to its threshold)
   if (hand.active && (hand.palm > s.palmscore || hand.palmShape)) mem.palmSeen = now;
   const held = now - mem.palmSeen < s.palmgrace;     // bridge brief recognition dropouts
   if (held) {
-    if (!mem.fired) {
-      hand.hold += dt;
-      if (hand.hold >= s.lockhold) { hand.locked = !hand.locked; mem.fired = true; hand.hold = 0; }
-    }
-  } else { hand.hold = 0; mem.fired = false; }
+    hand.hold += dt;                                  // seconds the palm has been up
+    if (!mem.fired && hand.hold >= s.lockhold) { hand.locked = !hand.locked; mem.fired = true; }
+    if (!hand.showHelp && hand.hold >= s.helphold) { hand.locked = !hand.locked; hand.showHelp = true; }
+  } else { hand.hold = 0; mem.fired = false; hand.showHelp = false; }
 
   hand.engaged = hand.active && !hand.locked && !held && !hand.touching;
   hand.gain = 0;

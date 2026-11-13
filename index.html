@@ -21,10 +21,22 @@
     <canvas class="overlay"></canvas>
     <button id="start-camera" type="button">Start camera</button>
   </div>
-  <div id="camera-note">
-    <!-- open hand: "hand" icon from Lucide (lucide.dev), ISC licence -->
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2"/><path d="M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>
-    Show open palm for 3 seconds to lock/unlock
+  <!-- open hand: "hand" icon from Lucide (lucide.dev), ISC licence -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="hand-icon" viewBox="0 0 24 24"><path d="M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2"/><path d="M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></symbol>
+  </svg>
+  <div id="camera-notes">
+    <div id="camera-note"><svg aria-hidden="true"><use href="#hand-icon"/></svg>Show open palm for 3 seconds to lock/unlock</div>
+    <div id="help-note"><svg aria-hidden="true"><use href="#hand-icon"/></svg>Hold open palm for over 5 seconds to show gesture instructions</div>
+  </div>
+
+  <!-- shown while an open palm is held for over 5 seconds -->
+  <div id="gesture-help" hidden>
+    <p><b>Unlock / lock:</b> show an open palm for 3 seconds.</p>
+    <p><b>Turn:</b> hold thumb and index finger apart and twist your hand like a dial.</p>
+    <p><b>Finer movement:</b> bring thumb and finger closer together.</p>
+    <p><b>Pause:</b> touch thumb and finger together, then reposition your hand to keep turning.</p>
+    <p>Moving your hand out of view leaves the wheel where it is.</p>
   </div>
 
   <!-- config UI (H hides it): settings, image sources, hint -->
@@ -37,7 +49,7 @@
       <button id="choose-arena" class="text-link muted" type="button">Are.na channel…</button>
       <form id="arena-form" hidden>
         <input id="arena-link" type="text" placeholder="Paste a public Are.na channel link" autocomplete="off">
-        <button type="submit">Load</button>
+        <button type="submit" class="text-link">load</button>
       </form>
       <button id="show-help" class="text-link" type="button">Show instructions</button>
       <div id="help" hidden>

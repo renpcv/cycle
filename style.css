@@ -4,6 +4,7 @@
   --muted: rgba(242, 242, 242, 0.55);
   --featured-size: min(34vw, 62vh);
   --camera-width: clamp(220px, 24vw, 420px);
+  --camera-bottom: 62px;  /* room for the two notes under the video */
 }
 
 * { box-sizing: border-box; }
@@ -45,17 +46,29 @@ body { font: 12px/1.45 ui-monospace, SFMono-Regular, Consolas, "Liberation Mono"
 
 /* Camera view: bottom centre, mirrored like a selfie view */
 #camera {
-  position: fixed; left: 50%; bottom: 40px; transform: translateX(-50%);
+  position: fixed; left: 50%; bottom: var(--camera-bottom); transform: translateX(-50%);
   width: var(--camera-width); aspect-ratio: 16 / 9;
   background: var(--bg); overflow: hidden;
 }
-#camera-note {
+/* two hand notes under the video */
+#camera-notes {
   position: fixed; left: 50%; bottom: 13px; transform: translateX(-50%);
-  display: flex; align-items: center; gap: 6px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
   white-space: nowrap; color: var(--fg); pointer-events: none; line-height: 1;
 }
+#camera-notes > div { display: flex; align-items: center; gap: 6px; }
 #camera-note.unlocked { color: var(--muted); }
-#camera-note svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+#camera-notes svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+/* gesture instructions, left of the video while an open palm is held for over 5 seconds */
+#gesture-help {
+  position: fixed; bottom: var(--camera-bottom); right: calc(50% + var(--camera-width) / 2 + 20px);
+  width: min(300px, calc(50vw - var(--camera-width) / 2 - 36px));
+  background: var(--bg); color: var(--fg); line-height: 1.5; pointer-events: none;
+}
+#gesture-help[hidden] { display: none; }
+#gesture-help p { margin: 0 0 6px; }
+#gesture-help p:last-child { margin: 0; color: var(--muted); }
 
 #hide-hint {
   color: var(--fg); white-space: nowrap; margin-top: 18px;
@@ -82,12 +95,15 @@ button:hover { background: rgba(255, 255, 255, 0.16); }
 #config { position: fixed; left: 16px; top: 12px; display: flex; flex-direction: column; align-items: flex-start; }
 #hud pre { margin: 0; color: var(--muted); font: inherit; white-space: pre; }
 #toolbar { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; margin-top: 18px; }
-#arena-form { display: flex; gap: 6px; }
+/* Are.na link: a bare underline to type on, and a text "load" */
+#arena-form { display: flex; gap: 10px; align-items: baseline; margin: 2px 0 4px; }
 #arena-form[hidden] { display: none; }
 #arena-link {
-  font: inherit; color: var(--fg); background: var(--bg);
-  border: 1px solid rgba(255, 255, 255, 0.35); padding: 6px 8px; width: min(320px, 60vw);
+  font: inherit; color: var(--fg); background: transparent; outline: none;
+  border: none; border-bottom: 1px solid var(--muted); padding: 2px 0; width: min(300px, 60vw);
 }
+#arena-link:focus { border-bottom-color: var(--fg); }
+#arena-link::placeholder { color: var(--muted); }
 #status { color: var(--muted); max-width: 340px; }
 
 /* plain underlined text, not a boxed button */
