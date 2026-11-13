@@ -257,8 +257,6 @@ function frame(now) {
   updateKeyboard(dt);
   render(values);
   drawFeatured(featuredIndex(values));
-  cameraNotes.classList.toggle('unlocked', !hand.locked);  // white while locked, grey while unlocked
-  gNote.classList.toggle('unlocked', !hand.locked);
   if (gestureHelp.hidden === hand.showHelp) {             // open palm held for over 5 seconds
     gestureHelp.hidden = !hand.showHelp;
     placeNotes();
