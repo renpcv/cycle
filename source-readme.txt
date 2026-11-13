@@ -54,14 +54,14 @@ USING THE PAGE
 --------------
 Keyboard: 1-9 pick a setting, left/right arrows adjust it (Shift for bigger
 steps), R resets it, H hides or shows the settings, G hides or shows the
-gesture notes next to the video.
+gesture clues next to the video.
 
 Hands (click "Start camera" first):
 - Gestures start locked. Show an open palm for 3 seconds to unlock (and again to lock).
 - Hold thumb and index finger wide apart and twist like a big dial to turn the wheel.
 - Bring them closer for finer movement. Touch them to pause. This also allows
   you to reposition your hand and keep turning.
-- Hold an open palm for over 5 seconds to show these gesture instructions
+- Hold an open palm for over 5 seconds to show all gesture controls
   next to the video.
 
 
