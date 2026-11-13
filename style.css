@@ -52,8 +52,7 @@ body { font: 12px/1.45 ui-monospace, SFMono-Regular, Consolas, "Liberation Mono"
 #camera-note {
   position: fixed; left: 50%; bottom: 13px; transform: translateX(-50%);
   display: flex; align-items: center; gap: 6px;
-  white-space: nowrap; color: var(--fg); pointer-events: none;
-  font: 400 13px/1 "Geist", system-ui, sans-serif;   /* sans serif, to set it apart from the config text */
+  white-space: nowrap; color: var(--fg); pointer-events: none; line-height: 1;
 }
 #camera-note svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 
