@@ -34,7 +34,7 @@ Needs an internet connection: Three.js and the MediaPipe model load from public 
 | thumb + index touching | clutch: twist without moving the wheel |
 | open palm held 3 s | lock / unlock hand controls (markers turn to X's) |
 
-Values you tune are remembered in this browser. Gesture settings are at the top of `js/hands.js` (`GESTURE`).
+Values reset to their defaults (in `js/params.js`) on every reload. Gesture settings are at the top of `js/hands.js` (`GESTURE`).
 
 ## Host it online
 

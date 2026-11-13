@@ -16,21 +16,14 @@ export const PARAMS = [
   { name: 'focus_dir', key: '9', default: 109,   step: 5,     hold: 1,     min: -180, max: 180 },
 ];
 
-const STORE = 'cycle.params';
 const HOLD_DELAY = 0.35;   // seconds before a held arrow starts repeating
 
+// every load starts from the defaults; nothing is remembered between visits
 export const values = Object.fromEntries(PARAMS.map((p) => [p.name, p.default]));
 export const ui = { selected: 0, hudVisible: true };
 
-// Remember tuned values in this browser (not spin/fine, so each visit starts at the same place).
-try {
-  const saved = JSON.parse(localStorage.getItem(STORE) || '{}');
-  for (const p of PARAMS) if (p.name !== 'spin' && p.name !== 'fine' && typeof saved[p.name] === 'number') values[p.name] = saved[p.name];
-} catch { /* storage unavailable: use defaults */ }
-
-function save() {
-  try { localStorage.setItem(STORE, JSON.stringify(values)); } catch { /* ignore */ }
-}
+// clear values an earlier version of the page saved in this browser
+try { localStorage.removeItem('cycle.params'); } catch { /* storage unavailable */ }
 
 export function clampSet(name, v) {
   const p = PARAMS.find((q) => q.name === name);
@@ -42,7 +35,6 @@ export function clampSet(name, v) {
 function nudge(amount) {
   const p = PARAMS[ui.selected];
   clampSet(p.name, values[p.name] + amount);
-  save();
 }
 
 const held = { left: false, right: false, shift: false, pressedAt: 0 };
@@ -64,7 +56,6 @@ export function initKeyboard({ onToggleHud } = {}) {
     } else if (e.key === 'r' || e.key === 'R') {
       const p = PARAMS[ui.selected];
       values[p.name] = p.default;
-      save();
     } else if (e.key === 'h' || e.key === 'H') {
       ui.hudVisible = !ui.hudVisible;
       onToggleHud?.(ui.hudVisible);
