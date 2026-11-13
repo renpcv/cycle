@@ -123,7 +123,8 @@ button.text-link, button.text-link:hover, a.text-link {
   color: var(--muted); text-decoration: underline; text-underline-offset: 3px;
 }
 .text-link.muted { color: var(--muted); }
-.text-link.muted:hover { color: var(--fg); }
+button.text-link:hover:not(:disabled), a.text-link:hover { color: var(--fg); }   /* every text link brightens on hover */
+button.text-link:disabled { cursor: default; }
 
 /* Instructions: open under their link, on the page background so they stay readable over images */
 #help {
