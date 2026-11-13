@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cycle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">
+    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js" } }
+  </script>
+</head>
+<body>
+  <canvas id="wheel"></canvas>
+
+  <div id="featured"><canvas></canvas><div id="caption" hidden></div></div>
+
+  <dialog id="caption-dialog"></dialog>
+
+  <div id="camera">
+    <video playsinline muted></video>
+    <canvas class="overlay"></canvas>
+    <button id="start-camera" type="button">Start camera</button>
+  </div>
+  <div id="camera-note">
+    <!-- open hand: "hand" icon from Lucide (lucide.dev), ISC licence -->
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2"/><path d="M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>
+    Show open palm for 3 seconds to lock/unlock
+  </div>
+
+  <div id="hud">
+    <div class="hud-title">Wheel Settings</div>
+    <pre></pre>
+  </div>
+  <div id="hide-hint">Press H to hide config UI</div>
+
+  <div id="toolbar">
+    <button id="choose-folder" type="button">Choose image folder…</button>
+    <input id="folder-input" type="file" webkitdirectory multiple hidden>
+    <button id="choose-arena" type="button">Are.na channel…</button>
+    <form id="arena-form" hidden>
+      <input id="arena-link" type="text" placeholder="Paste a public Are.na channel link" autocomplete="off">
+      <button type="submit">Load</button>
+    </form>
+    <button id="show-help" class="text-link" type="button">Show instructions</button>
+    <span id="status"></span>
+  </div>
+
+  <dialog id="help-dialog">
+    <form method="dialog">
+      <button class="close" value="close" type="submit" aria-label="Close">×</button>
+      <h2>Instructions</h2>
+      <p><b>Choose image folder…</b> picks a folder of images on this computer (or drop a folder onto the page).
+        The images stay on your computer and are never uploaded.</p>
+      <p>To add titles and information, put a spreadsheet in the folder (CSV, Excel or LibreOffice) with one column that
+        contains the filename of each image. You'll be asked which column to use as the title and up to four more to show under the enlarged image.</p>
+      <p><b>Are.na channel…</b> loads the images from a public Are.na channel. Paste the channel's link, e.g.
+        are.na/your-name/your-channel. The page address then opens that channel directly, so you can bookmark or share it.</p>
+    </form>
+  </dialog>
+
+  <div id="drop-hint">Drop images or a folder</div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
