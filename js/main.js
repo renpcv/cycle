@@ -257,12 +257,17 @@ function frame(now) {
   updateKeyboard(dt);
   render(values);
   drawFeatured(featuredIndex(values));
-  if (gestureHelp.hidden === hand.showHelp) {             // open palm held for over 5 seconds
-    gestureHelp.hidden = !hand.showHelp;
+  // open palm: after 1 s something starts fading in, fully shown at 5 s.
+  //   notes showing:      the 5-second note fades in, then the instructions appear at 5 s
+  //   notes hidden by G:  the instructions themselves fade in
+  const fade = Math.min(1, Math.max(0, (hand.hold - 1) / (GESTURE.helphold - 1)));
+  const gMode = cameraNotes.classList.contains('notes-hidden');
+  const showHelp = gMode ? hand.hold > 1 : hand.showHelp;
+  if (gestureHelp.hidden === showHelp) {
+    gestureHelp.hidden = !showHelp;
     placeNotes();
   }
-  // the 5-second note: appears after 1 s of open palm, fading in until the instructions open at 5 s
-  const fade = Math.min(1, Math.max(0, (hand.hold - 1) / (GESTURE.helphold - 1)));
+  gestureHelp.style.opacity = gMode ? fade : 1;
   if (helpNote.hidden === hand.hold > 1) {
     helpNote.hidden = !(hand.hold > 1);
     placeNotes();

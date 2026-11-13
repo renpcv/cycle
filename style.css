@@ -62,7 +62,7 @@ body { font: 12px/1.45 ui-monospace, SFMono-Regular, Consolas, "Liberation Mono"
 #camera-notes > div { display: flex; align-items: flex-start; gap: 6px; }
 #camera-notes.notes-hidden > div:not(#gesture-help) { display: none; }      /* G hides the note lines */
 #camera-notes > div[hidden] { display: none; }                              /* 5-second note: only while a palm is held */
-#help-note { transition: opacity 0.15s linear; }                            /* fades in from 1 s to 5 s of palm (main.js) */
+#help-note, #gesture-help { transition: opacity 0.15s linear; }             /* fade in from 1 s to 5 s of palm (main.js) */
 
 /* "Press G" line, level with the bottom of the video (main.js places it) */
 #g-note { position: fixed; color: var(--muted); pointer-events: none; line-height: 1.3; white-space: nowrap; }
