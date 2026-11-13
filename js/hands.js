@@ -49,7 +49,7 @@ const filters = Object.fromEntries(Object.keys(JOINTS).flatMap((j) => [[j + 'x',
 
 // Live state, like the 'gesture' + 'gesture_state' CHOPs (shown in the HUD)
 // starts locked: hold an open palm to unlock the gesture controls
-export const hand = { active: false, spread: 0, angle: 0, palm: 0, palmShape: false, touching: false, engaged: false, gain: 0, locked: true, hold: 0, showHelp: false };
+export const hand = { active: false, spread: 0, angle: 0, palm: 0, palmShape: false, touching: false, engaged: false, gain: 0, locked: true, hold: 0, showHelp: false, palmUp: false };
 const mem = { prev: null, palmSeen: -99, fired: false, t: null };
 
 let recognizer = null, video = null, overlay = null, ctx = null, onSpin = () => {}, landmarks = null;
@@ -136,6 +136,7 @@ function updateGesture(now, lm, palmScore) {
   // (either MediaPipe's Open_Palm score or the hand's shape counts, since the score alone runs close to its threshold)
   if (hand.active && (hand.palm > s.palmscore || hand.palmShape)) mem.palmSeen = now;
   const held = now - mem.palmSeen < s.palmgrace;     // bridge brief recognition dropouts
+  hand.palmUp = held;
   if (held) {
     hand.hold += dt;                                  // seconds the palm has been up
     if (!mem.fired && hand.hold >= s.lockhold) { hand.locked = !hand.locked; mem.fired = true; }

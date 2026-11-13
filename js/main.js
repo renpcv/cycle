@@ -17,6 +17,7 @@ const hud = $('#hud pre');
 const status = $('#status');
 const cameraNotes = $('#camera-notes');
 const gestureHelp = $('#gesture-help');
+const helpNote = $('#help-note');
 
 let items = [];
 let shownIndex = -2;     // featured image currently drawn
@@ -240,6 +241,10 @@ function frame(now) {
   cameraNotes.classList.toggle('unlocked', !hand.locked);  // white while locked, grey while unlocked
   if (gestureHelp.hidden === hand.showHelp) {             // open palm held for over 5 seconds
     gestureHelp.hidden = !hand.showHelp;
+    placeNotes();
+  }
+  if (helpNote.hidden === hand.palmUp) {                   // the 5-second note shows only while a palm is up
+    helpNote.hidden = !hand.palmUp;
     placeNotes();
   }
   if (ui.hudVisible) drawHud();
