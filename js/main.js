@@ -15,7 +15,7 @@ const video = $('#camera video');
 const startBtn = $('#start-camera');
 const hud = $('#hud pre');
 const status = $('#status');
-const cameraNote = $('#camera-note');
+const cameraNotes = $('#camera-notes');
 const gestureHelp = $('#gesture-help');
 
 let items = [];
@@ -167,6 +167,8 @@ function layout() {
   const f = featuredBox.getBoundingClientRect();
   const c = cameraBox.getBoundingClientRect();
   setLayout(Math.min(0.5, f.left / 2 / vw), Math.min(0.5, c.top / 2 / vh));
+  // hand notes: right of the video, lined up with its top
+  Object.assign(cameraNotes.style, { left: `${c.right + 20}px`, top: `${c.top}px` });
   const dpr = window.devicePixelRatio;
   featuredCanvas.width = Math.round(f.width * dpr);
   featuredCanvas.height = Math.round(f.height * dpr);
@@ -218,7 +220,7 @@ function frame(now) {
   updateKeyboard(dt);
   render(values);
   drawFeatured(featuredIndex(values));
-  cameraNote.classList.toggle('unlocked', !hand.locked);   // white while locked, grey while unlocked
+  cameraNotes.classList.toggle('unlocked', !hand.locked);  // white while locked, grey while unlocked
   gestureHelp.hidden = !hand.showHelp;                     // open palm held for over 5 seconds
   if (ui.hudVisible) drawHud();
   requestAnimationFrame(frame);
