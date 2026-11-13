@@ -54,7 +54,7 @@ USING THE PAGE
 --------------
 Keyboard: 1-9 pick a setting, left/right arrows adjust it (Shift for bigger
 steps), R resets it, H hides or shows the settings, G hides or shows the
-gesture clues next to the video.
+gesture hints next to the video.
 
 Hands (click "Start camera" first):
 - Gestures start locked. Show an open palm for 3 seconds to unlock (and again to lock).
