@@ -1,5 +1,5 @@
 :root {
-  --bg: #111111;          /* page background (TD rendered on transparent) */
+  --bg: #000000;          /* page background; every dark surface uses this (TD rendered on transparent) */
   --fg: #f2f2f2;
   --muted: rgba(242, 242, 242, 0.55);
   --featured-size: min(34vw, 62vh);
