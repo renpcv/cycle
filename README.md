@@ -30,7 +30,7 @@ Needs an internet connection: Three.js and the MediaPipe model load from public 
 | ←/→ | change it (hold to repeat, Shift = 10×) |
 | R | reset it |
 | H | hide/show the HUD and buttons |
-| thumb + index apart, twist | turn the wheel like a knob; a smaller gap moves it more finely |
+| thumb + index apart, twist | turn the wheel like a big dial (spread wide for speed); a smaller gap moves it more finely |
 | thumb + index touching | clutch: twist without moving the wheel |
 | open palm held 3 s | lock / unlock hand controls (markers turn to X's) |
 
