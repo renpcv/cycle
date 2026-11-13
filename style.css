@@ -55,6 +55,7 @@ body { font: 12px/1.45 ui-monospace, SFMono-Regular, Consolas, "Liberation Mono"
 #camera-notes {
   position: fixed; display: flex; flex-direction: column; align-items: flex-start; gap: 8px;
   color: var(--fg); pointer-events: none; line-height: 1.3; background: var(--bg);
+  z-index: 10;   /* above the featured image and its caption, so the instructions can overlap them */
 }
 #camera-notes > div { display: flex; align-items: flex-start; gap: 6px; }
 #camera-notes.unlocked > div:not(#gesture-help):not(#help-note) { color: var(--muted); }   /* white while locked, grey while unlocked (the fading 5 s note stays white) */
@@ -69,7 +70,12 @@ body { font: 12px/1.45 ui-monospace, SFMono-Regular, Consolas, "Liberation Mono"
 #camera-notes svg { flex: none; margin-top: 1px; width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 
 /* gesture instructions: open while an open palm is held for over 5 seconds */
-#camera-notes #gesture-help { display: block; color: var(--fg); line-height: 1.5; margin-top: 6px; }
+/* one line per instruction, reaching past the notes column (over the caption if need be);
+   wraps only if the window is too narrow (max-width set in main.js) */
+#camera-notes #gesture-help {
+  display: block; color: var(--fg); line-height: 1.5; margin-top: 6px;
+  width: max-content; background: var(--bg); padding-right: 12px;
+}
 #camera-notes.notes-hidden #gesture-help { margin-top: 0; }   /* alone: level with the top of the video */
 #camera-notes #gesture-help[hidden] { display: none; }
 #gesture-help p { margin: 0 0 6px; }

@@ -175,6 +175,7 @@ function placeNotes() {
   // stop short of the featured image so the notes never run under it or its caption
   const width = Math.max(200, Math.min(560, featuredBox.getBoundingClientRect().left - 24 - left));
   cameraNotes.style.width = `${width}px`;
+  gestureHelp.style.maxWidth = `${window.innerWidth - left - 16}px`;   // instructions may run past the column, not off screen
   // top-aligned with the video, moved up only as far as needed to stay above the G line / screen edge
   const floor = gShown ? c.bottom - gNote.offsetHeight - 12 : window.innerHeight - 16;
   const top = Math.min(c.top, floor - cameraNotes.offsetHeight);
