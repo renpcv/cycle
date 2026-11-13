@@ -3,8 +3,9 @@ CYCLE - SOURCE CODE
 
 An image wheel you can turn with hand gestures, running in a web browser.
 This download holds the same tool in two ready-to-use forms. The page itself
-(the wheel, the gestures, the captions) is identical in both. They only differ
-in how they are run.
+(the wheel, the gestures, the captions) is identical in both, and both start
+with the same 10 placeholder images (in their images folder) until other
+images are loaded. They only differ in how they are run.
 
 
 local/  RUN IT ON YOUR OWN COMPUTER
@@ -19,8 +20,8 @@ Best for: exhibitions, workshops, using your own image folder day to day.
    - Other:   open a terminal in the local folder and run  node serve.mjs
    Your browser opens http://localhost:8080. Keep the black terminal window open
    while you use the page. Close it to stop.
-3. Put your images in local/images. New or removed images show up within a few
-   seconds, no restart needed. Delete the placeholder-XX.png files once you add your own.
+3. To replace the placeholders, put your images in local/images and delete the
+   placeholder-XX.png files. Changes show up within a few seconds, no restart needed.
 
 
 web/  PUT IT ONLINE
@@ -32,8 +33,9 @@ Upload the contents of the web folder to any static web host, for example:
   Settings > Pages > Deploy from a branch.
 - Netlify: drag the web folder onto https://app.netlify.com/drop
 
-To change the images that load by default, replace the files in web/images and
-update web/images/manifest.json so it lists the new filenames. You can edit it by
+To replace the placeholders, put your images in web/images, delete the
+placeholder-XX.png files, and update web/images/manifest.json so it lists the
+new filenames. You can edit it by
 hand, or (with Node.js installed) run  node build-manifest.mjs  in the web folder.
 A static host can't look inside a folder, so this list is how the page knows
 which images exist.
