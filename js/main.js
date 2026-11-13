@@ -158,7 +158,7 @@ function drawHud() {
     : hand.hold > 0 ? `palm ${hand.hold.toFixed(1)}s`
     : hand.engaged ? `dial  spread ${hand.spread.toFixed(2)}  gain ${hand.gain.toFixed(2)}`
     : 'clutch';
-  hud.textContent = `Keyboard: 1-9 select · ←/→ adjust (shift ×10) · R reset\n\n${rows.join('\n')}\n\n${state} · ${detail}\n${items.length} images`;
+  hud.textContent = `1-9 select · ←/→ adjust (shift ×10) · R reset\n\n${rows.join('\n')}\n\n${state} · ${detail}\n${items.length} images`;
 }
 
 // ---------- layout: wheel sits left of the featured image, above the camera view ----------
