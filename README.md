@@ -26,7 +26,7 @@ Needs an internet connection: Three.js and the MediaPipe model load from public 
 
 | Input | Effect |
 |---|---|
-| 1-9 | pick a value (spin, fine, ring width/length, card yaw, elevation, azimuth, zoom, focus direction) |
+| 1-9 | pick a value (spin, fine, ring width/length, card yaw, camera lat (elevation), camera azi (azimuth), zoom, focus direction) |
 | ←/→ | change it (hold to repeat, Shift = 10×) |
 | R | reset it |
 | H | hide/show the HUD and buttons |

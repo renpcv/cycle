@@ -151,7 +151,7 @@ initKeyboard({ onToggleHud: (visible) => { document.body.classList.toggle('hud-h
 
 function fmt(v) { return Number.isInteger(v) ? String(v) : v.toFixed(3).replace(/0+$/, '').replace(/\.$/, ''); }
 function drawHud() {
-  const rows = PARAMS.map((p, i) => `${i === ui.selected ? '>' : ' '} ${p.key}  ${p.name.padEnd(10)} ${fmt(values[p.name])}`);
+  const rows = PARAMS.map((p, i) => `${i === ui.selected ? '>' : ' '} ${p.key}  ${(p.label || p.name).padEnd(10)} ${fmt(values[p.name])}`);
   // hand status always fits on one line, so nothing below it moves
   const state = hand.locked ? 'LOCKED' : 'unlocked';
   const detail = !hand.active ? 'no hand'

@@ -1,6 +1,7 @@
 // Every adjustable value, like the 'params' Table DAT in TouchDesigner.
 // Keys 1-9 pick a row, left/right step it (shift = 10x, hold to repeat), R resets it.
 // Defaults are the values the TD project had when this was ported.
+// 'label' (optional) is what the HUD shows; 'name' stays the internal key.
 
 export const PARAMS = [
   // name        key  default  step   hold/frame  min   max
@@ -9,8 +10,8 @@ export const PARAMS = [
   { name: 'radius_x',  key: '3', default: 1.33,  step: 0.05,  hold: 0.02,  min: 0.1,  max: null },
   { name: 'radius_z',  key: '4', default: 2.21,  step: 0.05,  hold: 0.02,  min: 0.1,  max: null },
   { name: 'card_yaw',  key: '5', default: 13,    step: 1,     hold: 0.5,   min: -180, max: 180 },
-  { name: 'elevation', key: '6', default: 35.5,  step: 1,     hold: 0.5,   min: 0,    max: 90 },
-  { name: 'azimuth',   key: '7', default: 32.56, step: 1,     hold: 0.5,   min: -180, max: 180 },
+  { name: 'elevation', key: '6', default: 35.5,  step: 1,     hold: 0.5,   min: 0,    max: 90,  label: 'camera lat' },
+  { name: 'azimuth',   key: '7', default: 32.56, step: 1,     hold: 0.5,   min: -180, max: 180, label: 'camera azi' },
   { name: 'zoom',      key: '8', default: 10,    step: 0.25,  hold: 0.1,   min: 1,    max: null },
   { name: 'focus_dir', key: '9', default: 109,   step: 5,     hold: 1,     min: -180, max: 180 },
 ];
