@@ -109,7 +109,6 @@ button.text-link, button.text-link:hover, a.text-link {
   color: var(--fg); text-decoration: underline; text-underline-offset: 3px;
 }
 .text-link.muted { color: var(--muted); }
-#download-source { margin-top: 18px; }
 .text-link.muted:hover { color: var(--fg); }
 
 /* Instructions: open under their link, on the page background so they stay readable over images */

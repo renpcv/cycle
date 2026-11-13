@@ -43,13 +43,6 @@
     <div id="hud"><pre></pre></div>
 
     <div id="toolbar">
-      <button id="choose-folder" class="text-link muted" type="button">Choose image folder…</button>
-      <input id="folder-input" type="file" webkitdirectory multiple hidden>
-      <button id="choose-arena" class="text-link muted" type="button">Are.na channel…</button>
-      <form id="arena-form" hidden>
-        <input id="arena-link" type="text" placeholder="Paste a public Are.na channel link" autocomplete="off">
-        <button type="submit" class="text-link">load</button>
-      </form>
       <button id="show-help" class="text-link" type="button">Show instructions</button>
       <div id="help" hidden>
         <p><b>Choose image folder…</b> picks a folder of images on this computer (or drop a folder onto the page).
@@ -60,11 +53,18 @@
           are.na/your-name/your-channel. The page address then opens that channel directly, so you can bookmark or share it.
           <button id="hide-help" class="text-link" type="button">hide</button></p>
       </div>
+      <button id="choose-folder" class="text-link muted" type="button">Choose image folder…</button>
+      <input id="folder-input" type="file" webkitdirectory multiple hidden>
+      <button id="choose-arena" class="text-link muted" type="button">Are.na channel…</button>
+      <form id="arena-form" hidden>
+        <input id="arena-link" type="text" placeholder="Paste a public Are.na channel link" autocomplete="off">
+        <button type="submit" class="text-link">load</button>
+      </form>
+      <a id="download-source" class="text-link muted" href="cycle-source.zip" download>Download source code (.zip)</a>
       <span id="status"></span>
     </div>
 
     <div id="hide-hint">Press H to hide config UI</div>
-    <a id="download-source" class="text-link muted" href="cycle-source.zip" download>Download source code (.zip)</a>
   </div>
 
   <div id="drop-hint">Drop images or a folder</div>
