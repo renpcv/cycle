@@ -3,14 +3,14 @@ CYCLE - SOURCE CODE
 
 An image wheel you can turn with hand gestures, running in a web browser.
 This download holds the same tool in two ready-to-use forms. The page itself
-(the wheel, the gestures, the captions) is identical in both, and both start
-with the same 10 placeholder images (in their images folder) until other
-images are loaded. They only differ in how they are run.
+(the wheel, the gestures, the captions) is identical in both. Both open with
+10 placeholder images; load your own on the page with "Choose image folder..."
+or "Are.na channel...". They only differ in how they are run.
 
 
 local/  RUN IT ON YOUR OWN COMPUTER
 -----------------------------------
-Best for: exhibitions, workshops, using your own image folder day to day.
+Best for: exhibitions and workshops, or using it without putting anything online.
 
 1. Install Node.js (free, from https://nodejs.org). Any recent version works.
 2. Start it:
@@ -20,8 +20,6 @@ Best for: exhibitions, workshops, using your own image folder day to day.
    - Other:   open a terminal in the local folder and run  node serve.mjs
    Your browser opens http://localhost:8080. Keep the black terminal window open
    while you use the page. Close it to stop.
-3. To replace the placeholders, put your images in local/images and delete the
-   placeholder-XX.png files. Changes show up within a few seconds, no restart needed.
 
 
 web/  PUT IT ONLINE
@@ -33,20 +31,13 @@ Upload the contents of the web folder to any static web host, for example:
   Settings > Pages > Deploy from a branch.
 - Netlify: drag the web folder onto https://app.netlify.com/drop
 
-To replace the placeholders, put your images in web/images, delete the
-placeholder-XX.png files, and update web/images/manifest.json so it lists the
-new filenames. You can edit it by
-hand, or (with Node.js installed) run  node build-manifest.mjs  in the web folder.
-A static host can't look inside a folder, so this list is how the page knows
-which images exist.
-
 The page has a "Download source code" link. On your copy it needs this zip:
 put cycle-source.zip in the web folder next to index.html, or the link won't work.
 
 
 WHAT'S THE SAME IN BOTH
 -----------------------
-- Visitors can still load any images: "Choose image folder..." (images stay on their
+- Load any images on the page: "Choose image folder..." (images stay on the
   computer, never uploaded), drag a folder onto the page, or paste a public
   Are.na channel link.
 - A spreadsheet (CSV, Excel or LibreOffice) in a chosen folder adds titles and

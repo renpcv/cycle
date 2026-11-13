@@ -20,7 +20,7 @@ const images = fs.readdirSync(path.join(root, 'images')).filter((f) => IMAGE.tes
 const entries = [
   [TOP + 'README.txt', 'source-readme.txt'],
   ...[...page, ...images, 'serve.mjs', 'build-manifest.mjs', 'start.bat', 'start.command'].map((f) => [TOP + 'local/' + f, f]),
-  ...[...page, ...images, 'images/manifest.json', 'build-manifest.mjs', '.nojekyll'].map((f) => [TOP + 'web/' + f, f]),
+  ...[...page, ...images, 'images/manifest.json', '.nojekyll'].map((f) => [TOP + 'web/' + f, f]),   // ready-made manifest, so nothing to run
 ];
 
 // line endings that work after unzipping: CRLF for Windows files, LF for the Mac script
