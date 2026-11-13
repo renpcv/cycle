@@ -49,7 +49,13 @@ async function useFolder(files) {
   const all = [...files];
   const sheets = all.filter(isSheet).sort((a, b) => a.name.localeCompare(b.name));
   const images = all.filter((f) => !isSheet(f));
-  const loading = useLocalFiles(images);
+  // the link itself says it's loading, until the folder's images are in
+  folderButton.textContent = 'Loading folder…';
+  folderButton.disabled = true;
+  const loading = Promise.resolve(useLocalFiles(images)).finally(() => {
+    folderButton.textContent = 'Choose image folder…';
+    folderButton.disabled = false;
+  });
   if (!sheets.length) return;
   const sheet = sheets[0];
   let rows;
@@ -75,7 +81,8 @@ $('#show-help').addEventListener('click', () => { help.hidden = !help.hidden; })
 $('#hide-help').addEventListener('click', () => { help.hidden = true; });
 
 const folderInput = $('#folder-input');
-$('#choose-folder').addEventListener('click', () => folderInput.click());
+const folderButton = $('#choose-folder');
+folderButton.addEventListener('click', () => folderInput.click());
 folderInput.addEventListener('change', () => { useFolder(folderInput.files); folderInput.value = ''; });
 
 const arenaForm = $('#arena-form');
