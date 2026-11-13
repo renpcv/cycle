@@ -59,7 +59,13 @@ body { font: 12px/1.45 ui-monospace, SFMono-Regular, Consolas, "Liberation Mono"
 #camera-notes > div { display: flex; align-items: flex-start; gap: 6px; }
 #camera-notes.unlocked > div:not(#gesture-help) { color: var(--muted); }   /* white while locked, grey while unlocked */
 #camera-notes.notes-hidden > div:not(#gesture-help) { display: none; }      /* G hides the note lines */
-#camera-notes > div[hidden] { display: none; }                              /* 5-second note: only while a palm is up */
+#camera-notes > div[hidden] { display: none; }                              /* 5-second note: only while a palm is held */
+#help-note { transition: opacity 0.15s linear; }                            /* fades in from 1 s to 5 s of palm (main.js) */
+
+/* "Press G" line, level with the bottom of the video (main.js places it) */
+#g-note { position: fixed; color: var(--fg); pointer-events: none; line-height: 1.3; white-space: nowrap; }
+#g-note.unlocked { color: var(--muted); }
+#g-note.g-hidden { display: none; }
 #camera-notes svg { flex: none; margin-top: 1px; width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 
 /* gesture instructions: open while an open palm is held for over 5 seconds */

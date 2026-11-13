@@ -3,7 +3,7 @@
 import { PARAMS, values, ui, clampSet, initKeyboard, updateKeyboard } from './params.js';
 import { initImages, useLocalFiles, useArenaChannel, arenaChannelSlug } from './images.js';
 import { initWheel, setItems, setLayout, featuredIndex, render } from './wheel.js';
-import { hand, initHands, startCamera } from './hands.js';
+import { hand, GESTURE, initHands, startCamera } from './hands.js';
 import { isSheet, readSheet, findFilenameColumn, columnNames, chooseColumns, notice, buildCaptions, imageKey } from './captions.js';
 
 const $ = (sel) => document.querySelector(sel);
@@ -18,6 +18,7 @@ const status = $('#status');
 const cameraNotes = $('#camera-notes');
 const gestureHelp = $('#gesture-help');
 const helpNote = $('#help-note');
+const gNote = $('#g-note');
 
 let items = [];
 let shownIndex = -2;     // featured image currently drawn
@@ -168,17 +169,26 @@ function drawHud() {
 function placeNotes() {
   const c = cameraBox.getBoundingClientRect();
   const left = c.right + 20;
+  // "Press G" line: level with the bottom of the video
+  Object.assign(gNote.style, { left: `${left}px`, top: `${c.bottom - gNote.offsetHeight}px` });
+  const gShown = gNote.offsetHeight > 0;
   // stop short of the featured image so the notes never run under it or its caption
   const width = Math.max(200, Math.min(560, featuredBox.getBoundingClientRect().left - 24 - left));
   cameraNotes.style.width = `${width}px`;
-  const top = Math.min(c.top, window.innerHeight - 16 - cameraNotes.offsetHeight);
+  // top-aligned with the video, moved up only as far as needed to stay above the G line / screen edge
+  const floor = gShown ? c.bottom - gNote.offsetHeight - 12 : window.innerHeight - 16;
+  const top = Math.min(c.top, floor - cameraNotes.offsetHeight);
   Object.assign(cameraNotes.style, { left: `${left}px`, top: `${Math.max(8, top)}px` });
 }
 
-// G hides or shows the hand note lines (the 5-second palm instructions still appear)
+// G hides or shows the hand notes and its own line (the 5-second palm instructions still appear)
 window.addEventListener('keydown', (e) => {
   if (e.target instanceof HTMLInputElement || e.target instanceof HTMLSelectElement || document.querySelector('dialog[open]')) return;
-  if (e.key === 'g' || e.key === 'G') { cameraNotes.classList.toggle('notes-hidden'); placeNotes(); }
+  if (e.key === 'g' || e.key === 'G') {
+    cameraNotes.classList.toggle('notes-hidden');
+    gNote.classList.toggle('g-hidden', cameraNotes.classList.contains('notes-hidden'));
+    placeNotes();
+  }
 });
 
 function layout() {
@@ -239,14 +249,18 @@ function frame(now) {
   render(values);
   drawFeatured(featuredIndex(values));
   cameraNotes.classList.toggle('unlocked', !hand.locked);  // white while locked, grey while unlocked
+  gNote.classList.toggle('unlocked', !hand.locked);
   if (gestureHelp.hidden === hand.showHelp) {             // open palm held for over 5 seconds
     gestureHelp.hidden = !hand.showHelp;
     placeNotes();
   }
-  if (helpNote.hidden === hand.palmUp) {                   // the 5-second note shows only while a palm is up
-    helpNote.hidden = !hand.palmUp;
+  // the 5-second note: appears after 1 s of open palm, fading in until the instructions open at 5 s
+  const fade = Math.min(1, Math.max(0, (hand.hold - 1) / (GESTURE.helphold - 1)));
+  if (helpNote.hidden === hand.hold > 1) {
+    helpNote.hidden = !(hand.hold > 1);
     placeNotes();
   }
+  helpNote.style.opacity = fade;
   if (ui.hudVisible) drawHud();
   requestAnimationFrame(frame);
 }
