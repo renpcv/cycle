@@ -93,16 +93,26 @@ export function chooseColumns(dialog, { sheetName, names, fileCol, matches, tota
     el('h2', {}, 'Captions from spreadsheet'),
     el('p', { className: 'muted' }, `${sheetName}: filenames in “${names[fileCol]}”, ${matches} of ${total} images matched.`),
   );
-  const pick = (label, value, allowNone) => {
-    const select = el('select');
-    if (allowNone) select.append(el('option', { value: '-1' }, '—'));
+  // one row: a name, a column dropdown and (for info lines) a "show heading" toggle
+  const pick = (label, value, withHeading) => {
+    const select = el('select', { title: label || 'Additional info' });
+    select.append(el('option', { value: '-1' }, '—'));
     names.forEach((n, c) => select.append(el('option', { value: String(c) }, n)));
     select.value = String(value);
-    form.append(el('label', {}, el('span', {}, label), select));
-    return select;
+    const heading = withHeading ? el('input', { type: 'checkbox', title: 'Show the column name before the value' }) : null;
+    form.append(el('div', { className: 'row' },
+      el('span', {}, label), select,
+      heading ? el('label', { className: 'toggle' }, heading, 'show heading') : el('span')));
+    return { select, heading };
   };
-  const titleSel = pick('Title', titleDefault, true);
+  const titleSel = pick('Title', titleDefault, false).select;
   const extraSels = Array.from({ length: MAX_EXTRAS }, (_, i) => pick(i ? '' : 'Additional info', -1, true));
+  // the toggle only matters once a column is picked
+  for (const x of extraSels) {
+    const sync = () => { x.heading.disabled = x.select.value === '-1'; x.heading.parentElement.style.opacity = x.heading.disabled ? 0.35 : 1; };
+    x.select.addEventListener('change', sync);
+    sync();
+  }
   const buttons = el('div', { className: 'buttons' },
     el('button', { value: 'none', type: 'submit' }, 'Images only'),
     el('button', { value: 'ok', type: 'submit', className: 'primary' }, 'Show captions'));
@@ -113,7 +123,10 @@ export function chooseColumns(dialog, { sheetName, names, fileCol, matches, tota
   return new Promise((resolve) => {
     dialog.addEventListener('close', () => {
       if (dialog.returnValue !== 'ok') return resolve(null);
-      resolve({ title: Number(titleSel.value), extras: extraSels.map((s) => Number(s.value)).filter((c) => c >= 0) });
+      resolve({
+        title: Number(titleSel.value),
+        extras: extraSels.map((x) => ({ col: Number(x.select.value), heading: x.heading.checked })).filter((x) => x.col >= 0),
+      });
     }, { once: true });
   });
 }
@@ -136,7 +149,7 @@ export function buildCaptions(rows, { fileCol, hasHeader, names }, choice) {
     const key = imageKey(r[fileCol] ?? '');
     if (!key || captions.has(key)) continue;
     const title = choice.title >= 0 ? (r[choice.title] ?? '') : '';
-    const extras = choice.extras.map((c) => ({ label: names[c], value: r[c] ?? '' })).filter((x) => x.value);
+    const extras = choice.extras.map((x) => ({ label: names[x.col], value: r[x.col] ?? '', heading: x.heading })).filter((x) => x.value);
     if (title || extras.length) captions.set(key, { title, extras });
   }
   return captions;

@@ -240,7 +240,10 @@ function drawCaption(cap, w, h) {
   const lines = [];
   if (cap.title) lines.push(Object.assign(document.createElement('div'), { className: 'title', textContent: cap.title }));
   for (const x of cap.extras) {
-    lines.push(Object.assign(document.createElement('div'), { className: 'extra', textContent: x.value }));
+    const line = Object.assign(document.createElement('div'), { className: 'extra' });
+    if (x.heading) line.append(Object.assign(document.createElement('span'), { className: 'heading', textContent: x.label }));
+    line.append(x.value);
+    lines.push(line);
   }
   captionBox.replaceChildren(...lines);
   captionBox.hidden = false;

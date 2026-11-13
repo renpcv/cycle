@@ -26,6 +26,7 @@ body { font: 12px/1.45 ui-monospace, SFMono-Regular, Consolas, "Liberation Mono"
 #caption[hidden] { display: none; }
 #caption .title { font-size: 15px; line-height: 1.3; color: var(--fg); }
 #caption .extra { font-size: 12px; line-height: 1.35; color: var(--muted); }
+#caption .extra .heading { color: color-mix(in srgb, var(--fg) 30%, transparent); margin-right: 0.6em; }   /* optional column name, dimmer than the value */
 
 /* Spreadsheet column picker */
 #caption-dialog {
@@ -35,8 +36,10 @@ body { font: 12px/1.45 ui-monospace, SFMono-Regular, Consolas, "Liberation Mono"
 #caption-dialog::backdrop { background: transparent; }
 #caption-dialog h2 { font-size: inherit; margin: 0 0 8px; font-weight: 600; }
 #caption-dialog .muted { color: var(--muted); margin: 0 0 16px; }
-#caption-dialog label { display: grid; grid-template-columns: 130px 1fr; align-items: center; gap: 10px; margin: 6px 0; }
-#caption-dialog label span { color: var(--muted); }
+#caption-dialog .row { display: grid; grid-template-columns: 110px 1fr auto; align-items: center; gap: 10px; margin: 6px 0; }
+#caption-dialog .row > span { color: var(--muted); }
+#caption-dialog .toggle { display: flex; align-items: center; gap: 5px; color: var(--muted); white-space: nowrap; cursor: pointer; }
+#caption-dialog .toggle input { margin: 0; accent-color: var(--fg); }
 #caption-dialog select {
   font: inherit; color: var(--fg); background: var(--bg); border: 1px solid rgba(255, 255, 255, 0.35); padding: 5px 6px; min-width: 0;
 }
