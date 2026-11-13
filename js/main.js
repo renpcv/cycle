@@ -160,7 +160,8 @@ function drawHud() {
     : hand.hold > 0 ? `palm ${hand.hold.toFixed(1)}s`
     : hand.engaged ? `dial  spread ${hand.spread.toFixed(2)}  gain ${hand.gain.toFixed(2)}`
     : 'clutch';
-  hud.textContent = `1-9 select · ←/→ adjust (shift ×10) · R reset\n\n${rows.join('\n')}\n\n${state} · ${detail}\n${items.length} images`;
+  const placeholders = items.length && items.every((it) => /^placeholder-\d+\.png$/i.test(it.name));   // the default set
+  hud.textContent = `1-9 select · ←/→ adjust (shift ×10) · R reset\n\n${rows.join('\n')}\n\n${state} · ${detail}\n${items.length} images${placeholders ? ' (placeholders)' : ''}`;
 }
 
 // ---------- layout: wheel sits left of the featured image, above the camera view ----------
