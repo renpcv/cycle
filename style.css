@@ -57,7 +57,7 @@ body { font: 12px/1.45 ui-monospace, SFMono-Regular, Consolas, "Liberation Mono"
   color: var(--fg); pointer-events: none; line-height: 1.3; background: var(--bg);
 }
 #camera-notes > div { display: flex; align-items: flex-start; gap: 6px; }
-#camera-notes.unlocked > div:not(#gesture-help) { color: var(--muted); }   /* white while locked, grey while unlocked */
+#camera-notes.unlocked > div:not(#gesture-help):not(#help-note) { color: var(--muted); }   /* white while locked, grey while unlocked (the fading 5 s note stays white) */
 #camera-notes.notes-hidden > div:not(#gesture-help) { display: none; }      /* G hides the note lines */
 #camera-notes > div[hidden] { display: none; }                              /* 5-second note: only while a palm is held */
 #help-note { transition: opacity 0.15s linear; }                            /* fades in from 1 s to 5 s of palm (main.js) */
