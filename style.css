@@ -57,8 +57,7 @@ body { font: 12px/1.45 ui-monospace, SFMono-Regular, Consolas, "Liberation Mono"
 #camera-note svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 
 #hide-hint {
-  position: fixed; left: 50%; top: 12px; transform: translateX(-50%);
-  color: var(--fg); pointer-events: none; white-space: nowrap;
+  color: var(--fg); white-space: nowrap; margin-top: 18px;
   animation: blink 1s step-end infinite;   /* on and off, to catch the eye */
 }
 @keyframes blink { 50% { opacity: 0; } }
@@ -78,25 +77,26 @@ button {
 }
 button:hover { background: rgba(255, 255, 255, 0.16); }
 
-#hud { position: fixed; left: 16px; top: 12px; pointer-events: none; }
+/* Config column, top left: settings, then image sources, then the H hint */
+#config { position: fixed; left: 16px; top: 12px; display: flex; flex-direction: column; align-items: flex-start; }
 #hud .hud-title { color: var(--fg); font-weight: 600; margin-bottom: 6px; }
 #hud pre { margin: 0; color: var(--muted); font: inherit; white-space: pre; }
-#toolbar { position: fixed; right: 16px; top: 12px; display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
-#toolbar > button { width: 100%; }
+#toolbar { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; margin-top: 18px; }
 #arena-form { display: flex; gap: 6px; }
 #arena-form[hidden] { display: none; }
 #arena-link {
   font: inherit; color: var(--fg); background: rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.35); padding: 6px 8px; width: min(320px, 60vw);
 }
-#status { color: var(--muted); max-width: 340px; text-align: right; }
+#status { color: var(--muted); max-width: 340px; }
 
 /* plain underlined text, not a boxed button */
 button.text-link, button.text-link:hover {
   background: none; border: none; padding: 2px 0; width: auto;
   color: var(--fg); text-decoration: underline; text-underline-offset: 3px;
 }
-#toolbar > button.text-link { width: auto; align-self: center; }
+button.text-link.muted { color: var(--muted); }
+button.text-link.muted:hover { color: var(--fg); }
 
 /* Instructions */
 #help-dialog {
@@ -117,7 +117,7 @@ button.text-link, button.text-link:hover {
 #help-dialog li { margin: 2px 0; }
 #help-dialog .buttons { display: flex; justify-content: flex-end; margin-top: 16px; }
 #help-dialog button.primary { background: var(--fg); color: #111; }
-body.hud-hidden #hud, body.hud-hidden #toolbar, body.hud-hidden #hide-hint { display: none; }
+body.hud-hidden #config { display: none; }
 
 #drop-hint {
   position: fixed; inset: 0; display: none; place-items: center;

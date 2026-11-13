@@ -47,7 +47,8 @@ const JOINTS = { wrist: 0, thumbTip: 4, indexMcp: 5, indexTip: 8 };
 const filters = Object.fromEntries(Object.keys(JOINTS).flatMap((j) => [[j + 'x', new OneEuro()], [j + 'y', new OneEuro()]]));
 
 // Live state, like the 'gesture' + 'gesture_state' CHOPs (shown in the HUD)
-export const hand = { active: false, spread: 0, angle: 0, palm: 0, palmShape: false, touching: false, engaged: false, gain: 0, locked: false, hold: 0 };
+// starts locked: hold an open palm to unlock the gesture controls
+export const hand = { active: false, spread: 0, angle: 0, palm: 0, palmShape: false, touching: false, engaged: false, gain: 0, locked: true, hold: 0 };
 const mem = { prev: null, palmSeen: -99, fired: false, t: null };
 
 let recognizer = null, video = null, overlay = null, ctx = null, onSpin = () => {}, landmarks = null;
