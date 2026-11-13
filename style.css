@@ -50,24 +50,20 @@ body { font: 12px/1.45 ui-monospace, SFMono-Regular, Consolas, "Liberation Mono"
   width: var(--camera-width); aspect-ratio: 16 / 9;
   background: var(--bg); overflow: hidden;
 }
-/* two hand notes, right of the video, top-aligned with it (main.js places them) */
+/* hand notes, left of the video and lined up with its top (main.js places them),
+   with the gesture instructions opening underneath */
 #camera-notes {
   position: fixed; display: flex; flex-direction: column; align-items: flex-start; gap: 8px;
-  max-width: calc(50vw - var(--camera-width) / 2 - 36px);
-  color: var(--fg); pointer-events: none; line-height: 1.3;
+  width: min(330px, calc(50vw - var(--camera-width) / 2 - 36px));
+  color: var(--fg); pointer-events: none; line-height: 1.3; background: var(--bg);
 }
 #camera-notes > div { display: flex; align-items: flex-start; gap: 6px; }
-#camera-notes svg { flex: none; margin-top: 1px; }
-#camera-notes.unlocked { color: var(--muted); }   /* white while locked, grey while unlocked */
-#camera-notes svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+#camera-notes.unlocked > div:not(#gesture-help) { color: var(--muted); }   /* white while locked, grey while unlocked */
+#camera-notes svg { flex: none; margin-top: 1px; width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 
-/* gesture instructions, left of the video while an open palm is held for over 5 seconds */
-#gesture-help {
-  position: fixed; bottom: var(--camera-bottom); right: calc(50% + var(--camera-width) / 2 + 20px);
-  width: min(300px, calc(50vw - var(--camera-width) / 2 - 36px));
-  background: var(--bg); color: var(--fg); line-height: 1.5; pointer-events: none;
-}
-#gesture-help[hidden] { display: none; }
+/* gesture instructions: open while an open palm is held for over 5 seconds */
+#camera-notes #gesture-help { display: block; color: var(--fg); line-height: 1.5; margin-top: 6px; }
+#camera-notes #gesture-help[hidden] { display: none; }
 #gesture-help p { margin: 0 0 6px; }
 #gesture-help p:last-child { margin: 0; }
 

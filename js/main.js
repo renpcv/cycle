@@ -162,13 +162,20 @@ function drawHud() {
 }
 
 // ---------- layout: wheel sits left of the featured image, above the camera view ----------
+// hand notes: left of the video, lined up with its top; moved up only as far as needed
+// to keep the opened gesture instructions on screen
+function placeNotes() {
+  const c = cameraBox.getBoundingClientRect();
+  const top = Math.min(c.top, window.innerHeight - 16 - cameraNotes.offsetHeight);
+  Object.assign(cameraNotes.style, { right: `${window.innerWidth - c.left + 20}px`, top: `${Math.max(8, top)}px` });
+}
+
 function layout() {
   const vw = window.innerWidth, vh = window.innerHeight;
   const f = featuredBox.getBoundingClientRect();
   const c = cameraBox.getBoundingClientRect();
   setLayout(Math.min(0.5, f.left / 2 / vw), Math.min(0.5, c.top / 2 / vh));
-  // hand notes: right of the video, lined up with its top
-  Object.assign(cameraNotes.style, { left: `${c.right + 20}px`, top: `${c.top}px` });
+  placeNotes();
   const dpr = window.devicePixelRatio;
   featuredCanvas.width = Math.round(f.width * dpr);
   featuredCanvas.height = Math.round(f.height * dpr);
@@ -221,7 +228,10 @@ function frame(now) {
   render(values);
   drawFeatured(featuredIndex(values));
   cameraNotes.classList.toggle('unlocked', !hand.locked);  // white while locked, grey while unlocked
-  gestureHelp.hidden = !hand.showHelp;                     // open palm held for over 5 seconds
+  if (gestureHelp.hidden === hand.showHelp) {             // open palm held for over 5 seconds
+    gestureHelp.hidden = !hand.showHelp;
+    placeNotes();
+  }
   if (ui.hudVisible) drawHud();
   requestAnimationFrame(frame);
 }
