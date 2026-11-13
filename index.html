@@ -43,24 +43,20 @@
         <button type="submit">Load</button>
       </form>
       <button id="show-help" class="text-link" type="button">Show instructions</button>
+      <div id="help" hidden>
+        <p><b>Choose image folder…</b> picks a folder of images on this computer (or drop a folder onto the page).
+          The images stay on your computer and are never uploaded.</p>
+        <p>To add titles and information, put a spreadsheet in the folder (CSV, Excel or LibreOffice) with one column that
+          contains the filename of each image. You'll be asked which column to use as the title and up to four more to show under the enlarged image.</p>
+        <p><b>Are.na channel…</b> loads the images from a public Are.na channel. Paste the channel's link, e.g.
+          are.na/your-name/your-channel. The page address then opens that channel directly, so you can bookmark or share it.
+          <button id="hide-help" class="text-link" type="button">hide</button></p>
+      </div>
       <span id="status"></span>
     </div>
 
     <div id="hide-hint">Press H to hide config UI</div>
   </div>
-
-  <dialog id="help-dialog">
-    <form method="dialog">
-      <button class="close" value="close" type="submit" aria-label="Close">×</button>
-      <h2>Instructions</h2>
-      <p><b>Choose image folder…</b> picks a folder of images on this computer (or drop a folder onto the page).
-        The images stay on your computer and are never uploaded.</p>
-      <p>To add titles and information, put a spreadsheet in the folder (CSV, Excel or LibreOffice) with one column that
-        contains the filename of each image. You'll be asked which column to use as the title and up to four more to show under the enlarged image.</p>
-      <p><b>Are.na channel…</b> loads the images from a public Are.na channel. Paste the channel's link, e.g.
-        are.na/your-name/your-channel. The page address then opens that channel directly, so you can bookmark or share it.</p>
-    </form>
-  </dialog>
 
   <div id="drop-hint">Drop images or a folder</div>
 

@@ -38,22 +38,23 @@ body { font: 12px/1.45 ui-monospace, SFMono-Regular, Consolas, "Liberation Mono"
 #caption-dialog label { display: grid; grid-template-columns: 130px 1fr; align-items: center; gap: 10px; margin: 6px 0; }
 #caption-dialog label span { color: var(--muted); }
 #caption-dialog select {
-  font: inherit; color: var(--fg); background: #111; border: 1px solid rgba(255, 255, 255, 0.35); padding: 5px 6px; min-width: 0;
+  font: inherit; color: var(--fg); background: var(--bg); border: 1px solid rgba(255, 255, 255, 0.35); padding: 5px 6px; min-width: 0;
 }
 #caption-dialog .buttons { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; }
-#caption-dialog button.primary { background: var(--fg); color: #111; }
+#caption-dialog button.primary { background: var(--fg); color: var(--bg); }
 
 /* Camera view: bottom centre, mirrored like a selfie view */
 #camera {
   position: fixed; left: 50%; bottom: 40px; transform: translateX(-50%);
   width: var(--camera-width); aspect-ratio: 16 / 9;
-  background: #000; overflow: hidden;
+  background: var(--bg); overflow: hidden;
 }
 #camera-note {
   position: fixed; left: 50%; bottom: 13px; transform: translateX(-50%);
   display: flex; align-items: center; gap: 6px;
   white-space: nowrap; color: var(--fg); pointer-events: none; line-height: 1;
 }
+#camera-note.unlocked { color: var(--muted); }
 #camera-note svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 
 #hide-hint {
@@ -85,7 +86,7 @@ button:hover { background: rgba(255, 255, 255, 0.16); }
 #arena-form { display: flex; gap: 6px; }
 #arena-form[hidden] { display: none; }
 #arena-link {
-  font: inherit; color: var(--fg); background: rgba(0, 0, 0, 0.4);
+  font: inherit; color: var(--fg); background: var(--bg);
   border: 1px solid rgba(255, 255, 255, 0.35); padding: 6px 8px; width: min(320px, 60vw);
 }
 #status { color: var(--muted); max-width: 340px; }
@@ -98,30 +99,19 @@ button.text-link, button.text-link:hover {
 button.text-link.muted { color: var(--muted); }
 button.text-link.muted:hover { color: var(--fg); }
 
-/* Instructions */
-#help-dialog {
-  position: relative; background: var(--bg); color: var(--fg); border: none;
-  padding: 20px 24px; width: min(560px, calc(100vw - 32px)); max-height: calc(100vh - 48px); font: inherit; line-height: 1.55;
+/* Instructions: open under their link, on the page background so they stay readable over images */
+#help {
+  background: var(--bg); color: var(--fg); line-height: 1.55;
+  width: min(420px, calc(100vw - 32px)); padding: 8px 10px 4px 0; margin: 2px 0 4px;
 }
-#help-dialog::backdrop { background: transparent; }
-#help-dialog h2 { font-size: inherit; margin: 0 0 14px; font-weight: 600; }
-#help-dialog .close {
-  position: absolute; top: 8px; right: 10px; background: none; border: none; padding: 2px 6px;
-  color: var(--muted); font-size: 20px; line-height: 1;
-}
-#help-dialog .close:hover { color: var(--fg); background: none; }
-#help-dialog .close:focus:not(:focus-visible) { outline: none; }
-#help-dialog h3 { font-size: 12px; margin: 18px 0 4px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
-#help-dialog p { margin: 0 0 8px; }
-#help-dialog ul { margin: 0 0 8px; padding-left: 18px; }
-#help-dialog li { margin: 2px 0; }
-#help-dialog .buttons { display: flex; justify-content: flex-end; margin-top: 16px; }
-#help-dialog button.primary { background: var(--fg); color: #111; }
+#help[hidden] { display: none; }
+#help p { margin: 0 0 8px; }
+#help button.text-link { padding: 0; margin-left: 0.4em; }
 body.hud-hidden #config { display: none; }
 
 #drop-hint {
   position: fixed; inset: 0; display: none; place-items: center;
-  background: rgba(0, 0, 0, 0.6); font-size: 18px; pointer-events: none;
+  background: color-mix(in srgb, var(--bg) 85%, transparent); font-size: 18px; pointer-events: none;
 }
 body.dragging #drop-hint { display: grid; }
 

@@ -15,6 +15,7 @@ const video = $('#camera video');
 const startBtn = $('#start-camera');
 const hud = $('#hud pre');
 const status = $('#status');
+const cameraNote = $('#camera-note');
 
 let items = [];
 let shownIndex = -2;     // featured image currently drawn
@@ -71,7 +72,10 @@ async function useFolder(files) {
   if (choice) setCaptions(buildCaptions(rows, { fileCol: found.col, hasHeader: found.hasHeader, names: columns }, choice));
 }
 
-$('#show-help').addEventListener('click', () => $('#help-dialog').showModal());
+// instructions open under their link; the link toggles them, "hide" at the end closes them
+const help = $('#help');
+$('#show-help').addEventListener('click', () => { help.hidden = !help.hidden; });
+$('#hide-help').addEventListener('click', () => { help.hidden = true; });
 
 const folderInput = $('#folder-input');
 $('#choose-folder').addEventListener('click', () => folderInput.click());
@@ -212,6 +216,7 @@ function frame(now) {
   updateKeyboard(dt);
   render(values);
   drawFeatured(featuredIndex(values));
+  cameraNote.classList.toggle('unlocked', !hand.locked);   // white while locked, grey while unlocked
   if (ui.hudVisible) drawHud();
   requestAnimationFrame(frame);
 }
