@@ -17,7 +17,8 @@ Other image sets:
   is the title and up to 4 more to show underneath the enlarged image. If no column matches the images, the images show without captions.
 - **Are.na channel…**: paste a link to a public [Are.na](https://www.are.na) channel (`are.na/<user>/<channel>`).
   No account or key needed to view it. Images show in the channel's order, and new blocks appear within about 20 s.
-  The address becomes `…?arena=<channel>`, so that link opens the same set.
+
+Every reload starts fresh: chosen folders and channels, and any tuned settings, are not remembered.
 
 Use Chrome or Edge. The camera only works on `http://localhost` or an `https://` address.
 Needs an internet connection: Three.js and the MediaPipe model load from public CDNs.

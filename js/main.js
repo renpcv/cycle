@@ -26,20 +26,15 @@ let shownKey = null;
 
 // ---------- images ----------
 initWheel(wheelCanvas);
-const startArena = new URLSearchParams(location.search).get('arena');
 initImages((list, removed) => {
   items = list;
   setItems(list, removed);
   shownIndex = -2;
   status.textContent = list.length ? '' : 'No images yet';
-}, (message) => { status.textContent = message; }, { server: !startArena });
+}, (message) => { status.textContent = message; });
 
-// the address remembers an Are.na channel (?arena=<channel>), so a bookmark or shared link opens that image set
-function setArenaParam(slug) {
-  const url = new URL(location.href);
-  if (slug) url.searchParams.set('arena', slug); else url.searchParams.delete('arena');
-  history.replaceState(null, '', url);
-}
+// every load starts fresh: drop the ?arena=… an earlier version added to the address
+if (new URLSearchParams(location.search).has('arena')) history.replaceState(null, '', location.pathname);
 
 // ---------- captions from a spreadsheet in a local folder ----------
 const captionBox = $('#caption');
@@ -50,7 +45,6 @@ function setCaptions(map) { captions = map; shownIndex = -2; }
 
 // A picked or dropped folder: show its images, then offer captions if it holds a spreadsheet
 async function useFolder(files) {
-  setArenaParam(null);
   setCaptions(null);
   const all = [...files];
   const sheets = all.filter(isSheet).sort((a, b) => a.name.localeCompare(b.name));
@@ -86,17 +80,22 @@ folderInput.addEventListener('change', () => { useFolder(folderInput.files); fol
 
 const arenaForm = $('#arena-form');
 const arenaLink = $('#arena-link');
-$('#choose-arena').addEventListener('click', () => { arenaForm.hidden = !arenaForm.hidden; if (!arenaForm.hidden) arenaLink.focus(); });
-arenaForm.addEventListener('submit', (e) => {
+const arenaButton = $('#choose-arena');
+arenaButton.addEventListener('click', () => { arenaForm.hidden = !arenaForm.hidden; if (!arenaForm.hidden) arenaLink.focus(); });
+arenaForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const slug = arenaChannelSlug(arenaLink.value);
   if (!slug) { status.textContent = 'That doesn’t look like an Are.na channel link'; return; }
   arenaForm.hidden = true;
-  setArenaParam(slug);
   setCaptions(null);
-  useArenaChannel(slug);
+  // the link itself says it's loading, until the channel's images are in
+  arenaButton.textContent = 'Loading Are.na channel…';
+  arenaButton.disabled = true;
+  try { await useArenaChannel(slug); } finally {
+    arenaButton.textContent = 'Are.na channel…';
+    arenaButton.disabled = false;
+  }
 });
-if (startArena) useArenaChannel(startArena);
 
 // drag and drop: files, or a whole folder
 window.addEventListener('dragover', (e) => { e.preventDefault(); document.body.classList.add('dragging'); });

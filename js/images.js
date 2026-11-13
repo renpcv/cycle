@@ -81,7 +81,6 @@ export function arenaChannelSlug(text) {
 }
 
 export function useArenaChannel(slug) {
-  onStatus('Loading Are.na channel…');
   return setSource('arena:' + slug, async (me) => {
     const blocks = await listArenaChannel(slug);
     await sync(me, blocks.map((b) => ({
