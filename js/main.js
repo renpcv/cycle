@@ -162,12 +162,12 @@ function drawHud() {
 }
 
 // ---------- layout: wheel sits left of the featured image, above the camera view ----------
-// hand notes: left of the video, lined up with its top; moved up only as far as needed
+// hand notes: right of the video, lined up with its top; moved up only as far as needed
 // to keep the opened gesture instructions on screen
 function placeNotes() {
   const c = cameraBox.getBoundingClientRect();
   const top = Math.min(c.top, window.innerHeight - 16 - cameraNotes.offsetHeight);
-  Object.assign(cameraNotes.style, { right: `${window.innerWidth - c.left + 20}px`, top: `${Math.max(8, top)}px` });
+  Object.assign(cameraNotes.style, { left: `${c.right + 20}px`, top: `${Math.max(8, top)}px` });
 }
 
 function layout() {
